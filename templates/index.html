@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ data.name }} - CV</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* CSS Variables cho Light và Dark Mode */
+      :root {
+        --bg-gradient: linear-gradient(
+          135deg,
+          #89f7fe,
+          #66a6ff,
+          #f6d365,
+          #fda085
+        );
+        --bg-size: 400% 400%;
+        --text-color: #333;
+        --header-bg: rgba(230, 230, 250, 0.5); /* Lavender thay vì trắng */
+        --header-text: #333;
+        --nav-hover: #ff7f50;
+        --card-bg: rgba(230, 230, 250, 0.8); /* Lavender mờ hơn */
+        --card-text: #333;
+        --accent-color: #00bcd4;
+      }
+      .dark-mode {
+        /* Dark Mode với nền gradient tối, màu chữ sáng và màu accent ấm áp */
+        --bg-gradient: linear-gradient(135deg, #2c3e50, #4a5568);
+        --text-color: #ecf0f1;
+        --header-bg: rgba(44, 62, 80, 0.95);
+        --header-text: #ecf0f1;
+        --nav-hover: #e74c3c;
+        --card-bg: rgba(52, 73, 94, 0.95);
+        --card-text: #ecf0f1;
+        --accent-color: #e67e22;
+      }
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: var(--bg-gradient);
+        background-size: var(--bg-size);
+        animation: gradient 15s ease infinite;
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      /* Header & Navigation */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--header-bg);
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        z-index: 1000;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        animation: fadeInDown 0.8s ease-out;
+      }
+      header h1 {
+        font-size: 30px;
+        font-weight: bold;
+        color: var(--header-text);
+        margin-bottom: 5px;
+        transition: transform 0.3s, letter-spacing 0.3s;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      header h1:hover {
+        transform: scale(1.1);
+        letter-spacing: 4px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 0;
+      }
+      nav ul li {
+        transition: transform 0.3s;
+      }
+      nav ul li:hover {
+        transform: scale(1.1);
+      }
+      nav ul li a {
+        color: var(--header-text);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s, background 0.3s;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+      nav ul li a:hover {
+        color: var(--nav-hover);
+        background: rgba(255, 127, 80, 0.2);
+      }
+      /* Toggle Button */
+      #toggle-mode {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+        z-index: 1001;
+      }
+      #toggle-mode:hover {
+        background: var(--nav-hover);
+        transform: scale(1.1);
+      }
+      /* Section Styling */
+      section {
+        padding: 120px 20px 60px;
+        min-height: 100vh;
+        animation: fadeIn 1s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      header {
+        animation: fadeInDown 0.8s ease-out;
+      }
+      /* Hero Section */
+      #hero {
+        text-align: center;
+        background: url("https://source.unsplash.com/1600x900/?nature,bright")
+          no-repeat center center/cover;
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+      }
+      #hero .hero-content {
+        position: relative;
+        z-index: 1;
+        padding-top: 40px;
+      }
+      #hero .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid var(--accent-color);
+        margin-bottom: 20px;
+        animation: pulse 3s infinite;
+        transition: transform 0.3s;
+      }
+      #hero .profile-img:hover {
+        transform: scale(1.1);
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      #hero h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+      }
+      #hero p {
+        font-size: 22px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+      }
+      /* About, Skills, Projects, Contact, Experience, Certificates, Competitions Sections */
+      #about,
+      #skills,
+      #projects,
+      #experience,
+      #certificates,
+      #competitions,
+      #contact {
+        background: var(--card-bg);
+        border-radius: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        padding: 40px;
+        min-height: 100px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        color: var(--card-text);
+      }
+      #about h2,
+      #skills h2,
+      #projects h2,
+      #experience h2,
+      #certificates h2,
+      #competitions h2,
+      #contact h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 36px;
+      }
+      #about p {
+        font-size: 18px;
+        line-height: 1.8;
+        text-align: center;
+      }
+      /* Skills Section */
+      .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .skill {
+        background: var(--card-bg);
+        border: 2px solid var(--accent-color);
+        color: var(--card-text);
+        padding: 15px 25px;
+        border-radius: 10px;
+        transition: transform 0.3s, background 0.3s;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: default;
+      }
+      .skill:hover {
+        transform: scale(1.1);
+        background: var(--accent-color);
+        color: #fff;
+      }
+      /* Projects Section */
+      .project-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+      .project {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 10px;
+        transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        color: var(--card-text);
+      }
+      .project:hover {
+        transform: scale(1.05);
+        background: #f1f1f1;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+      /* List Styling cho các section Experience, Certificates, Competitions */
+      .info-list {
+        list-style: none;
+        font-size: 18px;
+        line-height: 2;
+        padding-left: 0;
+      }
+      .info-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .info-list li i {
+        color: var(--accent-color);
+      }
+      /* Contact Section */
+      /* set height for contact down */
+      #contact {
+        text-align: center;
+      }
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .contact-links a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--card-text);
+        transition: transform 0.3s;
+      }
+      .contact-links a:hover {
+        transform: scale(1.1);
+      }
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 20px;
+        background: var(--header-bg);
+        color: var(--header-text);
+      }
+      /* add after */
+      /* Hiệu ứng xuất hiện mượt mà */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Áp dụng hiệu ứng cho Experience, Certificates, Competitions */
+      #experience,
+      #certificates,
+      #competitions {
+        animation: fadeInUp 1s ease-out;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      #experience:hover,
+      #certificates:hover,
+      #competitions:hover {
+        transform: scale(1.02);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Hiệu ứng xuất hiện từng mục trong danh sách */
+      .info-list li {
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: fadeInLeft 0.8s ease-out forwards;
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Làm hiệu ứng delay từng phần tử */
+      .info-list li:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .info-list li:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .info-list li:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      /* Hiệu ứng hover cho từng mục */
+      .info-list li:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s;
+      }
+
+      /*  */
+    </style>
+  </head>
+  <body>
+    <button id="toggle-mode">Toggle Mode</button>
+    <header>
+      <h1
+        style="
+          font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        "
+      >
+        {{ data.name }}
+      </h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="#hero"><i class="fa-solid fa-house"></i> Home</a>
+          </li>
+          <li>
+            <a href="#about"><i class="fa-solid fa-user"></i> About</a>
+          </li>
+          <li>
+            <a href="#skills"><i class="fa-solid fa-code"></i> Skills</a>
+          </li>
+          <li>
+            <a href="#projects"
+              ><i class="fa-solid fa-briefcase"></i> Projects</a
+            >
+          </li>
+          <li>
+            <a href="#experience"
+              ><i class="fa-solid fa-briefcase"></i> Experience</a
+            >
+          </li>
+          <li>
+            <a href="#certificates"
+              ><i class="fa-solid fa-certificate"></i> Certificates</a
+            >
+          </li>
+          <li>
+            <a href="#competitions"
+              ><i class="fa-solid fa-trophy"></i> Competitions</a
+            >
+          </li>
+          <li>
+            <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="hero">
+      <div class="hero-content">
+        <img
+          class="profile-img"
+          src="{{ url_for('static', filename='avatar.jpg') }}"
+          alt="Profile Picture"
+        />
+        <h2>{{ data.name }}</h2>
+        <p>Fresher Developer and Cybersecurity</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2><i class="fas fa-user"></i> About Me</h2>
+      <p>{{data.aboutme()}}</p>
+    </section>
+
+    <section id="skills">
+      <h2><i class="fa-solid fa-code"></i> Skills</h2>
+      <div class="skill-list">
+        {% for skill in data.skills() %}
+        <div class="skill">{{ skill }}</div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2><i class="fa-solid fa-briefcase"></i>Projects</h2>
+      <div class="project-list">
+        {% for project in data.projects() %}
+        <div class="project">{{ project }}</div>
+        {% endfor %}
+        <!-- <div class="">Project One</div>
+        <div class="project">Project Two</div>
+        <div class="project">Project Three</div>
+        <div class="project">Project Four</div> -->
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2><i class="fa-solid fa-briefcase"></i> Experience</h2>
+      <ul class="info-list">
+        {% for experience in data.experiences() %}
+        <li>
+          <i class="fa-solid fa-briefcase"></i>
+          {{ experience }}
+        </li>
+        {% endfor %}
+
+        <!-- <li>
+          <i class="fa-solid fa-briefcase"></i>
+          Front-End Developer at ABC Tech (2018 - 2020)
+        </li>
+        <li>
+          <i class="fa-solid fa-briefcase"></i>
+          Intern at Example Corp (2017 - 2018)
+        </li> -->
+      </ul>
+    </section>
+
+    <section id="certificates">
+      <h2><i class="fa-solid fa-certificate"></i> Certificates</h2>
+      <ul class="info-list">
+        <li>
+          <i class="fa-solid fa-certificate"></i>
+          Certified Web Developer - ABC Institute (2021)
+        </li>
+        <li>
+          <i class="fa-solid fa-certificate"></i>
+          Cybersecurity Certification - DEF Academy (2020)
+        </li>
+        <li>
+          <i class="fa-solid fa-certificate"></i>
+          JavaScript Specialist - GHI Organization (2019)
+        </li>
+      </ul>
+    </section>
+
+    <section id="competitions">
+      <h2><i class="fa-solid fa-trophy"></i> Competitions</h2>
+      <ul class="info-list competition">
+        {% for competition in data.competitions() %}
+        <li>
+          <i class="fa-solid fa-trophy"></i>
+          {{competition}}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <div
+        class="contact-links"
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          margin-top: 20px;
+        "
+      >
+        <a
+          href="https://facebook.com/hd24000"
+          target="_blank"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background: #1877f2;
+            border-radius: 8px;
+            transition: transform 0.3s;
+          "
+        >
+          <i class="fa-brands fa-facebook"></i> Facebook
+        </a>
+        <a
+          href="https://github.com/haidang24"
+          target="_blank"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background: #333;
+            border-radius: 8px;
+            transition: transform 0.3s;
+          "
+        >
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a
+          href="mailto:maidang24112004@gmail.com"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background: #d44638;
+            border-radius: 8px;
+            transition: transform 0.3s;
+          "
+        >
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Your Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const toggleButton = document.getElementById("toggle-mode");
+      toggleButton.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+      });
+    </script>
+  </body>
+</html>
