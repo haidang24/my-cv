@@ -26,10 +26,10 @@ class Data:
     data = ["Python", "NodeJS", "Linux","Rust", "Docker", "GIT", "Tool Pentest", "Blockchain"]      
     return data
   def competitions(self):
-    data = ["Vietnam Hackathon: Onchain Names & Identity", "Mamathon Hackathon","DTU CTF"]
+    data = ["Top 10 Vietnam Hackathon: Onchain Names & Identity", "Top 3 Mamathon Hackathon","DTU CTF"]
     return data
   def projects(self):
-    data = ["DWEB", "Project 2", "Project 3"]
+    data = ["DWEB chat", "TLS verify", "Proxy AI python"]
     return data
   def experiences(self):
     data = ["Student at Academy of Cryptography Techniques, TPHCM","Intern Blockchain developers in FRIENDIFY AI Company"]
